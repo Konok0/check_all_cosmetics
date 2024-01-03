@@ -27,7 +27,7 @@ mod:hook(CLASS.InventoryCosmeticsView, "_verify_items", function(func, self, sou
 						break
 					end
 
-					if mod:get("mod_see_all") then
+					if mod:get("mod_see") then
 						verified_items[item_name] = item
 					elseif item.always_owned then
 						verified_items[item_name] = item
@@ -87,7 +87,7 @@ mod:hook(CLASS.CharacterCreate, "_verify_items", function(func, self, source_ite
 				if (table.contains(inventory_slots_array, slot_name) and (item.always_owned or owned_gear_by_master_id[item_name]) and not is_fallback) then
 					verified_items[item_name] = item
 					break
-				elseif mod:get("mod_see_all") then
+				elseif mod:get("mod_see") then
 					verified_items[item_name] = item
 					break
 				end
