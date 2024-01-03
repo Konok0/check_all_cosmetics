@@ -7,7 +7,7 @@ local mod_data = {
     options = {
         widgets = {
             {
-                setting_id = "mod_see_all",
+                setting_id = "mod_see",
                 type = "checkbox",
                 default_value = false,
             },
