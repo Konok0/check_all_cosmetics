@@ -6,12 +6,9 @@ return {
     en = "Check all cosmetics",
   },
   mod_see_all = {
-    en = "Check all cosmetics",
+    en = "Show all cosmetics",
   },
-  loc_not_all = {
-    en = "OFF",
-  },
-  loc_all = {
-    en = "ON",
+  mod_filter = {
+    en = "Disable archetype filter",
   },
 }

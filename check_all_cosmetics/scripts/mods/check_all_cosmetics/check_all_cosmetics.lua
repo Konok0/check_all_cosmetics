@@ -1,8 +1,6 @@
 local mod = get_mod("check_all_cosmetics")
-local CharacterCreate = require("scripts/utilities/character_create")
-local InventoryWeaponCosmeticsView = require("scripts/ui/views/inventory_weapon_cosmetics_view/inventory_weapon_cosmetics_view")
 
-mod:hook_origin("InventoryCosmeticsView", "_verify_items", function(self, source_items, owned_gear)
+mod:hook(CLASS.InventoryCosmeticsView, "_verify_items", function(func, self, source_items, owned_gear, ...)
 	local selected_slot = self._selected_slot
 	local selected_slot_name = selected_slot.name
 	local verified_items = {}
@@ -29,9 +27,9 @@ mod:hook_origin("InventoryCosmeticsView", "_verify_items", function(self, source
 						break
 					end
 
-					if mod:get("mod_see_all") == "mod_all" then
+					if mod:get("mod_see_all") then
 						verified_items[item_name] = item
-					elseif mod:get("mod_see_all") == "mod_not_all" and item.always_owned then
+					elseif item.always_owned then
 						verified_items[item_name] = item
 					end
 					
@@ -44,7 +42,30 @@ mod:hook_origin("InventoryCosmeticsView", "_verify_items", function(self, source
 	return verified_items
 end)
 
-mod:hook_origin("CharacterCreate", "_verify_items", function(self, source_items, owned_gear)
+mod:hook(CLASS.InventoryCosmeticsView, "_item_valid_by_current_profile", function(func, self, item, ...)
+	local player = self._preview_player
+	local profile = player:profile()
+	local archetype = profile.archetype
+	local lore = profile.lore
+	local backstory = lore.backstory
+	local crime = backstory.crime
+	local archetype_name = archetype.name
+	local breed_name = archetype.breed
+	local breed_valid = not item.breeds or table.contains(item.breeds, breed_name)
+	local crime_valid = not item.crimes or table.contains(item.crimes, crime)
+	local no_crimes = item.crimes == nil or table.is_empty(item.crimes)
+	local archetype_valid = not item.archetypes or table.contains(item.archetypes, archetype_name)
+
+	if archetype_valid and breed_valid and (no_crimes or crime_valid) then
+		return true
+	elseif mod:get("mod_filter") then
+		return true
+	end
+
+	return false
+end)
+
+mod:hook(CLASS.CharacterCreate, "_verify_items", function(func, self, source_items, owned_gear, ...)
 	local verified_items = {}
 	local inventory_slots_array = self._inventory_slots_array
 	local owned_gear_by_master_id = {}
@@ -66,7 +87,7 @@ mod:hook_origin("CharacterCreate", "_verify_items", function(self, source_items,
 				if (table.contains(inventory_slots_array, slot_name) and (item.always_owned or owned_gear_by_master_id[item_name]) and not is_fallback) and mod:get("mod_see_all") == "mod_not_all" then
 					verified_items[item_name] = item
 					break
-				elseif mod:get("mod_see_all") == "mod_all" then
+				elseif mod:get("mod_see_all") then
 					verified_items[item_name] = item
 					break
 				end

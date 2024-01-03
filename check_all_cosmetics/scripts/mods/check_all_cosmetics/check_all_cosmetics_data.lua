@@ -6,15 +6,16 @@ local mod_data = {
   is_togglable = true,
     options = {
         widgets = {
-			{
-				setting_id = "mod_see_all",
-				type = "dropdown",
-				default_value = "mod_not_all",
-				options = {
-					{ text = "loc_not_all", value = "mod_not_all" },
-					{ text = "loc_all", value = "mod_all" },
-				},
-			},
+            {
+                setting_id = "mod_see_all",
+                type = "checkbox",
+                default_value = false,
+            },
+            {
+                setting_id = "mod_filter",
+                type = "checkbox",
+                default_value = false,
+            },
 		}
 	}
 }
