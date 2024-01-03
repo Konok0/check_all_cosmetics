@@ -84,7 +84,7 @@ mod:hook(CLASS.CharacterCreate, "_verify_items", function(func, self, source_ite
 				local slot_name = slots[i]
 				local is_fallback = self:_is_fallback_item(slot_name, item_name)
 
-				if (table.contains(inventory_slots_array, slot_name) and (item.always_owned or owned_gear_by_master_id[item_name]) and not is_fallback) and mod:get("mod_see_all") == "mod_not_all" then
+				if (table.contains(inventory_slots_array, slot_name) and (item.always_owned or owned_gear_by_master_id[item_name]) and not is_fallback) then
 					verified_items[item_name] = item
 					break
 				elseif mod:get("mod_see_all") then
