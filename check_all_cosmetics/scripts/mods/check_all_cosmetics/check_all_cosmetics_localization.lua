@@ -5,7 +5,7 @@ return {
   mod_description = {
     en = "Check all cosmetics",
   },
-  mod_see_all = {
+  mod_see = {
     en = "Show all cosmetics",
   },
   mod_filter = {
