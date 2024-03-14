@@ -7,6 +7,14 @@ local mod_data = {
     options = {
         widgets = {
             {
+                setting_id = "mod_see_key",
+                type = "keybind",
+                default_value = {},
+                keybind_trigger = "pressed",
+                keybind_type = "function_call",
+                function_name = "mod_see_on_off",
+            },	
+            {
                 setting_id = "mod_see",
                 type = "checkbox",
                 default_value = false,
@@ -15,6 +23,24 @@ local mod_data = {
                 setting_id = "mod_filter",
                 type = "checkbox",
                 default_value = false,
+            },
+            {
+                setting_id = "mod_try",
+                type = "checkbox",
+                default_value = false,
+            },
+            {
+                setting_id = "mod_try_key",
+                type = "keybind",
+                default_value = {},
+                keybind_trigger = "pressed",
+                keybind_type = "function_call",
+                function_name = "mod_try_on_off",
+            },	
+            {
+					setting_id = "mod_see_sysname",
+					type = "checkbox",
+					default_value = false,
             },
 		}
 	}
